@@ -18,7 +18,7 @@ module.exports = {
 
             // Sort the params
             const sortedParams = qs
-                .stringify(params, { arrayFormat: 'brackets' })
+                .stringify(params, { arrayFormat: 'indices'})
                 .split('&')
                 .sort(sortByPropertyOnly)
                 .join('&')
