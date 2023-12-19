@@ -4,7 +4,7 @@ const router = express.Router();
 
 const TaskRoutes = require('./taskRoutes');
 const UserRoutes = require('./userRoutes');
-const UserRoutes = require('./validation');
+const validation = require('./validation');
 
 router.use('/tasks', TaskRoutes);
 router.use('/users', UserRoutes);
