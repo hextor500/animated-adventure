@@ -22,7 +22,6 @@ module.exports = {
                 .split('&')
                 .sort(sortByPropertyOnly)
                 .join('&')
-                .replace(/%20/g, '+');
 
             // Read the nonce from the request
             const nonce = req.headers['x-authy-signature-nonce'];
