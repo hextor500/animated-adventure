@@ -17,27 +17,19 @@ module.exports = {
             console.log(`params" ${params}`);
 
             // Sort the params
-            const sortedParams = Object.entries(params)
-                .map(([key, value]) => {
-                    if (typeof value === 'object') {
-                        return Object.entries(value)
-                            .map(([nestedKey, nestedValue]) => `${key}[${nestedKey}]=${encodeURIComponent(nestedValue)}`)
-                            .join('&');
-                    } else {
-                        return `${key}=${encodeURIComponent(value)}`;
-                    }
-                })
-                .sort()
+            const sortedParams = qs
+                .stringify(params, { arrayFormat: 'indices', encode: false })
+                .split('&')
+                .sort(sortByPropertyOnly)
+                .map((param) => param.replace(/%20/g, '+'))
                 .join('&');
-
-            const finalQueryString = sortedParams.replace(/%20/g, '+');
 
             // Read the nonce from the request
             const nonce = req.headers['x-authy-signature-nonce'];
             console.log(`Nonce Received ${nonce}`)
 
             // concatinate all together and separate by '|'
-            const data = nonce + '|' + method + '|' + url + '|' + finalQueryString;
+            const data = nonce + '|' + method + '|' + url + '|' + sortedParams;
 
             // compute the signature
             const computedSig = crypto
