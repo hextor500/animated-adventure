@@ -24,12 +24,14 @@ module.exports = {
                 .map((param) => param.replace(/%20/g, '+'))
                 .join('&');
 
+            const modifiedQueryString = sortedParams.replace(/\[(.*?)\]/g, '');
+
             // Read the nonce from the request
             const nonce = req.headers['x-authy-signature-nonce'];
             console.log(`Nonce Received ${nonce}`)
 
             // concatinate all together and separate by '|'
-            const data = nonce + '|' + method + '|' + url + '|' + sortedParams;
+            const data = nonce + '|' + method + '|' + url + '|' + modifiedQueryString;
 
             // compute the signature
             const computedSig = crypto
