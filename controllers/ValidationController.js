@@ -17,12 +17,18 @@ module.exports = {
             console.log(`params" ${params}`);
 
             // Sort the params
-            const sortedParams = qs
-                .stringify(params, { arrayFormat: 'indices'})
-                .split('&')
-                .sort(sortByPropertyOnly)
-                .join('&')
-                .replace(/%20/g, '+');
+            const sortedParams = Object.entries(params)
+                .map(([key, value]) => {
+                    if (typeof value === 'object') {
+                        return Object.entries(value)
+                            .map(([nestedKey, nestedValue]) => `${key}[${nestedKey}]=${encodeURIComponent(nestedValue)}`)
+                            .join('&');
+                    } else {
+                        return `${key}=${encodeURIComponent(value)}`;
+                    }
+                })
+                .sort()
+                .join('&');
 
             // Read the nonce from the request
             const nonce = req.headers['x-authy-signature-nonce'];
@@ -44,9 +50,11 @@ module.exports = {
             console.log(`Data ${data}`);
             console.log(`Generated Signature: ${computedSig}`);
             console.log(`Signature received: ${sig}`);
-            res.send({Generated: computedSig,
-            Received: sig});
-            
+            res.send({
+                Generated: computedSig,
+                Received: sig
+            });
+
             return console.log(sig === computedSig);
         }
 
