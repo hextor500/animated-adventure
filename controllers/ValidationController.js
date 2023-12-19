@@ -10,8 +10,11 @@ module.exports = {
          */
         function verifyCallback(req, apiKey) {
             const url = req.protocol + '://' + req.get('host') + req.originalUrl;
+            console.log(`URL" ${url}`);
             const method = req.method;
+            console.log(`method" ${method}`);
             const params = req.body;	// needs `npm i body-parser` on Express 4
+            console.log(`params" ${params}`);
 
             // Sort the params
             const sortedParams = qs
@@ -23,6 +26,7 @@ module.exports = {
 
             // Read the nonce from the request
             const nonce = req.headers['x-authy-signature-nonce'];
+            console.log(`Nonce Received ${nonce}`)
 
             // concatinate all together and separate by '|'
             const data = nonce + '|' + method + '|' + url + '|' + sortedParams;
