@@ -38,6 +38,7 @@ module.exports = {
 
             // compare the message signature with your calculated signature
             console.log("New verification");
+            console.log(`Data ${data}`);
             console.log(`Generated Signature: ${computedSig}`);
             console.log(`Signature received: ${sig}`);
             return console.log(sig === computedSig);
