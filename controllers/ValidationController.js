@@ -14,7 +14,7 @@ module.exports = {
             const method = req.method;
             console.log(`method" ${method}`);
             const params = req.body;	// needs `npm i body-parser` on Express 4
-            console.log(`params" ${params}`);
+            console.log(`params" ${JSON.stringify(params)}`);
 
             // Sort the params
             const sortedParams = qs
