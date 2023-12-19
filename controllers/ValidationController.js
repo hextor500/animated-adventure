@@ -18,21 +18,18 @@ module.exports = {
 
             // Sort the params
             const sortedParams = qs
-                .stringify(params, { arrayFormat: 'indices', encode: false })
+                .stringify(params, { arrayFormat: 'brackets' })
                 .split('&')
                 .sort(sortByPropertyOnly)
-                .map((param) => param.replace(/%20/g, '+'))
-                .join('&');
-
-            const modifiedQueryString = sortedParams.replace(/\[(.*?)\]/g, '');
-            const modifiedQueryStringSpaces = modifiedQueryString.replace(/ /g, '+');
+                .join('&')
+                .replace(/%20/g, '+');
 
             // Read the nonce from the request
             const nonce = req.headers['x-authy-signature-nonce'];
             console.log(`Nonce Received ${nonce}`)
 
             // concatinate all together and separate by '|'
-            const data = nonce + '|' + method + '|' + url + '|' + modifiedQueryStringSpaces;
+            const data = nonce + '|' + method + '|' + url + '|' + sortedParams;
 
             // compute the signature
             const computedSig = crypto
