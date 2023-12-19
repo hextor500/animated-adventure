@@ -37,9 +37,10 @@ module.exports = {
             const sig = req.headers['x-authy-signature'];
 
             // compare the message signature with your calculated signature
-            console.log(computedSig);
-            console.log(sig);
-            return sig === computedSig;
+            console.log("New verification");
+            console.log(`Generated Signature: ${computedSig}`);
+            console.log(`Signature received: ${sig}`);
+            return console.log(sig === computedSig);
         }
 
         verifyCallback(req, "HAxzdCjVrQLXfukq2bG57OC3WTVbkRQB");
