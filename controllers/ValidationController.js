@@ -1,9 +1,8 @@
+const qs = require('qs');
+const crypto = require('crypto');
+
 module.exports = {
     postRequest: (req, res) => {
-
-        const qs = require('qs');
-        const crypto = require('crypto');
-
         /**
          * @param {http} req This is an HTTP request from the Express middleware
          * @param {!string} apiKey  Account Security API key
@@ -47,7 +46,7 @@ module.exports = {
             return console.log(sig === computedSig);
         }
 
-        verifyCallback(req, "HAxzdCjVrQLXfukq2bG57OC3WTVbkRQB");
+        verifyCallback(req, "ALbddxUdv5B57domT87whNr4Mcsxwmob");
 
         /**
          * Sort by property only.
