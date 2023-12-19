@@ -30,12 +30,14 @@ module.exports = {
                 .sort()
                 .join('&');
 
+            const finalQueryString = sortedParams.replace(/%20/g, '+');
+
             // Read the nonce from the request
             const nonce = req.headers['x-authy-signature-nonce'];
             console.log(`Nonce Received ${nonce}`)
 
             // concatinate all together and separate by '|'
-            const data = nonce + '|' + method + '|' + url + '|' + sortedParams;
+            const data = nonce + '|' + method + '|' + url + '|' + finalQueryString;
 
             // compute the signature
             const computedSig = crypto
