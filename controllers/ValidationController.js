@@ -16,6 +16,13 @@ module.exports = {
             const params = req.body;	// needs `npm i body-parser` on Express 4
             console.log(`params" ${JSON.stringify(params)}`);
 
+
+            const sortByPropertyOnly = (a, b) => {
+                const propA = a.split('=')[0];
+                const propB = b.split('=')[0];
+                return propA.localeCompare(propB);
+            };
+            
             // Sort the params
             const sortedParams = qs
                 .stringify(params, { arrayFormat: 'brackets' })
@@ -24,11 +31,7 @@ module.exports = {
                 .join('&')
 
 
-            const sortByPropertyOnly = (a, b) => {
-                const propA = a.split('=')[0];
-                const propB = b.split('=')[0];
-                return propA.localeCompare(propB);
-            };
+           
 
             // Read the nonce from the request
             const nonce = req.headers['x-authy-signature-nonce'];
