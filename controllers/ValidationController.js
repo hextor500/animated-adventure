@@ -23,6 +23,13 @@ module.exports = {
                 .sort(sortByPropertyOnly)
                 .join('&')
 
+
+            const sortByPropertyOnly = (a, b) => {
+                const propA = a.split('=')[0];
+                const propB = b.split('=')[0];
+                return propA.localeCompare(propB);
+            };
+
             // Read the nonce from the request
             const nonce = req.headers['x-authy-signature-nonce'];
             console.log(`Nonce Received ${nonce}`)
